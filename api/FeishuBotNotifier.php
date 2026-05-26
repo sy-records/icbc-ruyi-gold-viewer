@@ -10,7 +10,7 @@ final class FeishuBotNotifier
     public static function getenv($varName)
     {
         if (php_sapi_name() === 'cli') {
-            return self::getenv($varName);
+            return getenv($varName);
         }
 
         switch ($varName) {
