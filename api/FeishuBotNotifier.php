@@ -152,16 +152,12 @@ final class FeishuBotNotifier
         $sell = isset($quote['sell']) && is_numeric((string)$quote['sell'])
             ? number_format((float)$quote['sell'], 2, '.', '')
             : '-';
-        $timestamp = (string)($quote['timestamp'] ?? gmdate('c'));
-        $productCode = (string)($quote['productCode'] ?? 'unknown');
 
         return implode("\n", [
             '【如意积存金提醒】',
             sprintf('买入价已低于 %.2f', $threshold),
             sprintf('当前买入价：%s', $buy),
             sprintf('当前卖出价：%s', $sell),
-            sprintf('产品代码：%s', $productCode),
-            sprintf('时间：%s', $timestamp),
         ]);
     }
 
