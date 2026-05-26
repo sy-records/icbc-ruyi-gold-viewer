@@ -32,7 +32,6 @@ final class QuoteParser
 
         return [
             'timestamp'   => gmdate('c'),
-            'productCode' => (string)($item['prodcode'] ?? 'unknown'),
             'buyRaw'      => $buyRaw,
             'sellRaw'     => $sellRaw,
             'buy'         => round($buyRaw / self::PRICE_SCALE, 2),
