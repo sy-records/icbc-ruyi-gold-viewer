@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>工商银行如意积存金走势</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>工商银行如意积存金走势</h1>
+      <p class="desc">数据来源: ICBC AsynGetDataServlet (tranCode=A00505)</p>
+
+      <section class="controls">
+        <button id="refreshBtn" type="button">立即刷新</button>
+        <label>
+          自动刷新
+          <select id="intervalSelect">
+            <option value="0">关闭</option>
+            <option value="30">30 秒</option>
+            <option value="60" selected>60 秒</option>
+            <option value="300">5 分钟</option>
+          </select>
+        </label>
+        <label>
+          时间范围
+          <select id="rangeSelect">
+            <option value="1h">近 1 小时</option>
+            <option value="24h" selected>近 24 小时</option>
+            <option value="7d">近 7 天</option>
+            <option value="all">全部</option>
+          </select>
+        </label>
+        <span id="statusText">准备就绪</span>
+      </section>
+
+      <section class="summary" id="summary">
+        <div>买入价: <strong id="buyPrice">-</strong></div>
+        <div>卖出价: <strong id="sellPrice">-</strong></div>
+        <div>时间: <strong id="quoteTime">-</strong></div>
+      </section>
+
+      <section class="chart-wrap">
+        <div id="chart"></div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
+
