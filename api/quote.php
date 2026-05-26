@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/FeishuBotNotifier.php';
 require_once __DIR__ . '/QuoteParser.php';
 
 header('Content-Type: application/json; charset=utf-8');
@@ -9,6 +10,7 @@ header('Content-Type: application/json; charset=utf-8');
 try {
     $payload = fetchIcbcPayload();
     $quote = QuoteParser::normalizeQuote($payload);
+    FeishuBotNotifier::maybeNotifyLowBuy($quote);
 
     echo json_encode([
         'source' => 'ICBC A00505',
@@ -26,9 +28,14 @@ try {
  */
 function fetchIcbcPayload(): array
 {
+    $opensslConf = getenv('ICBC_OPENSSL_CONF');
+    if ($opensslConf === false || trim($opensslConf) === '') {
+        $opensslConf = __DIR__ . '/openssl.conf';
+    }
+
     $cmd = sprintf(
         'OPENSSL_CONF=%s curl -sS -X POST %s -H %s --data-urlencode %s',
-        escapeshellarg(__DIR__ . 'openssl.conf'),
+        escapeshellarg($opensslConf),
         escapeshellarg('https://icbcphp.icbc.com.cn/servlet/AsynGetDataServlet'),
         escapeshellarg('Content-Type: application/x-www-form-urlencoded; charset=utf-8'),
         escapeshellarg('tranCode=A00505')
