@@ -7,12 +7,28 @@ final class FeishuBotNotifier
     private const DEFAULT_THRESHOLD = 999.0;
     private const DEFAULT_STATE_FILE = __DIR__ . '/.feishu-buy-alert-state.json';
 
+    public static function getenv($varName)
+    {
+        if (php_sapi_name() === 'cli') {
+            return self::getenv($varName);
+        }
+
+        switch ($varName) {
+            case 'FEISHU_BOT_WEBHOOK':
+                return 'https://open.feishu.cn/open-apis/bot/v2/hook/88a0925c-ce21-4a05-b547-f483fcf1d5c1';
+            case 'BUY_ALERT_THRESHOLD':
+                return '999';
+            default:
+                return '';
+        }
+    }
+
     /**
      * @param array<string, mixed> $quote
      */
     public static function maybeNotifyLowBuy(array $quote): void
     {
-        $webhook = trim((string)(getenv('FEISHU_BOT_WEBHOOK') ?: ''));
+        $webhook = trim(self::getenv('FEISHU_BOT_WEBHOOK') ?: '');
         if ($webhook === '') {
             return;
         }
@@ -62,7 +78,7 @@ final class FeishuBotNotifier
                 return;
             }
 
-            $secret = trim((string)(getenv('FEISHU_BOT_SECRET') ?: ''));
+            $secret = trim((string)(self::getenv('FEISHU_BOT_SECRET') ?: ''));
             $message = self::buildMessage($quote, $threshold);
             self::sendWebhook($webhook, $message, $secret);
 
@@ -83,7 +99,7 @@ final class FeishuBotNotifier
 
     private static function threshold(): float
     {
-        $raw = getenv('BUY_ALERT_THRESHOLD');
+        $raw = self::getenv('BUY_ALERT_THRESHOLD');
         if ($raw === false || $raw === '') {
             return self::DEFAULT_THRESHOLD;
         }
@@ -93,7 +109,7 @@ final class FeishuBotNotifier
 
     private static function stateFile(): string
     {
-        $raw = getenv('BUY_ALERT_STATE_FILE');
+        $raw = self::getenv('BUY_ALERT_STATE_FILE');
         if ($raw === false || trim($raw) === '') {
             return self::DEFAULT_STATE_FILE;
         }
