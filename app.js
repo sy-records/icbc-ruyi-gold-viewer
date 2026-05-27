@@ -326,7 +326,7 @@ async function fetchQuote() {
     updateSummary();
     updateChart();
     checkMonitor(quote);
-    statusText.textContent = `最新更新: ${formatTime(quote.timestamp)}`;
+    statusText.textContent = ``;
   } catch (error) {
     statusText.textContent = `刷新失败: ${error.message}`;
   }
