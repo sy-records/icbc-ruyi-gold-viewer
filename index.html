@@ -31,6 +31,28 @@
             <option value="all">全部</option>
           </select>
         </label>
+        <div class="monitor-controls">
+          <label>
+            监控字段
+            <select id="monitorFieldSelect">
+              <option value="buy">买入价</option>
+              <option value="sell" selected>卖出价</option>
+            </select>
+          </label>
+          <label>
+            条件
+            <select id="monitorDirectionSelect">
+              <option value="gte">大于等于</option>
+              <option value="lte">小于等于</option>
+            </select>
+          </label>
+          <label>
+            监控价格
+            <input id="monitorPriceInput" type="number" min="0" step="0.01" placeholder="例如 780.00" />
+          </label>
+          <button id="testNotifyBtn" type="button">测试提醒</button>
+        </div>
+        <span id="monitorState">价格监控未开启</span>
         <span id="statusText">准备就绪</span>
       </section>
 

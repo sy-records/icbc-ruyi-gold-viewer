@@ -32,13 +32,41 @@ h1 {
   margin: 16px 0;
 }
 
+.monitor-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+
+.monitor-controls label {
+  white-space: nowrap;
+}
+
+#monitorPriceInput {
+  width: 140px;
+}
+
 button,
-select {
+select,
+input {
   border: 1px solid #d1d5db;
   border-radius: 8px;
   padding: 8px 12px;
   background: #fff;
   font-size: 14px;
+}
+
+#monitorState {
+  color: #374151;
+}
+
+@media (max-width: 900px) {
+  .monitor-controls {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
 }
 
 button {
