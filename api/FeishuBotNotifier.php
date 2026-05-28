@@ -81,7 +81,7 @@ final class FeishuBotNotifier
                 : null;
 
             // Already below: only alert when price breaks the previous alerted low.
-            if ($wasBelow && $lastAlertBuy !== null && $buy > $lastAlertBuy) {
+            if ($wasBelow && $lastAlertBuy !== null && $buy >= $lastAlertBuy) {
                 return;
             }
 
