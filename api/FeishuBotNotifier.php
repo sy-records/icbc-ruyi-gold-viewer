@@ -81,7 +81,7 @@ final class FeishuBotNotifier
                 : null;
 
             // Already below: only alert when price breaks the previous alerted low.
-            if ($wasBelow && $lastAlertBuy !== null && $buy >= $lastAlertBuy) {
+            if ($wasBelow && $lastAlertBuy !== null && $buy > $lastAlertBuy) {
                 return;
             }
 
@@ -164,6 +164,7 @@ final class FeishuBotNotifier
             sprintf('买入价已低于 %.2f', $threshold),
             sprintf('当前买入价：%s', $buy),
             sprintf('当前卖出价：%s', $sell),
+            sprintf('时间: %s', date('H:i')),
         ]);
     }
 

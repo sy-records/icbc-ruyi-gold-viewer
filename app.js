@@ -218,8 +218,8 @@ function syncMonitorConfigFromControls() {
 
   saveMonitorConfig();
 
-  const latest = points[points.length - 1];
-  monitorTriggered = latest ? isTargetReached(latest) : false;
+  // Reset trigger state when rule changes so next matching quote can notify once.
+  monitorTriggered = false;
   updateMonitorState();
 }
 
@@ -377,8 +377,8 @@ if (monitorPriceInput && isMonitorEnabled()) {
   monitorPriceInput.value = String(monitorConfig.target);
 }
 
-const latest = points[points.length - 1];
-monitorTriggered = latest ? isTargetReached(latest) : false;
+// Initialize as not-triggered so first matching quote after load can notify once.
+monitorTriggered = false;
 updateMonitorState();
 
 updateSummary();
