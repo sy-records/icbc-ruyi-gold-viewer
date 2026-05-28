@@ -94,7 +94,6 @@ final class FeishuBotNotifier
                 'threshold' => $threshold,
                 'lastBuy' => $buy,
                 'lastAlertAt' => date('Y-m-d H:i:s'),
-                'productCode' => (string)($quote['productCode'] ?? ''),
             ]);
         } catch (Throwable $e) {
             error_log('[FeishuBotNotifier] ' . $e->getMessage());
