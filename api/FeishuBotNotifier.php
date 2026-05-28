@@ -68,13 +68,20 @@ final class FeishuBotNotifier
                 if (($state['isBelow'] ?? false) !== false) {
                     self::writeState($handle, [
                         'isBelow' => false,
-                        'updatedAt' => gmdate('c'),
+                        'lastBuy' => $buy,
+                        'updatedAt' => date('Y-m-d H:i:s'),
                     ]);
                 }
                 return;
             }
 
-            if (($state['isBelow'] ?? false) === true) {
+            $wasBelow = ($state['isBelow'] ?? false) === true;
+            $lastAlertBuy = isset($state['lastBuy']) && is_numeric((string)$state['lastBuy'])
+                ? (float)$state['lastBuy']
+                : null;
+
+            // Already below: only alert when price breaks the previous alerted low.
+            if ($wasBelow && $lastAlertBuy !== null && $buy >= $lastAlertBuy) {
                 return;
             }
 
@@ -86,7 +93,7 @@ final class FeishuBotNotifier
                 'isBelow' => true,
                 'threshold' => $threshold,
                 'lastBuy' => $buy,
-                'lastAlertAt' => gmdate('c'),
+                'lastAlertAt' => date('Y-m-d H:i:s'),
                 'productCode' => (string)($quote['productCode'] ?? ''),
             ]);
         } catch (Throwable $e) {
